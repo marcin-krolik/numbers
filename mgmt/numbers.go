@@ -37,7 +37,7 @@ func processQuery(values map[string][]string) []byte {
 		LogWarn(ErrURLQueryParamAmbiguous)
 	}
 
-	results := getNumbers(urls...)
+	results := processURLs(urls...)
 
 	respJson, err := json.Marshal(results)
 	if err != nil {
@@ -48,8 +48,8 @@ func processQuery(values map[string][]string) []byte {
 	return respJson
 }
 
-// getNumbers calls endpoints for list of integers, aggregates, filters and sorts results
-func getNumbers(urls ...string) Results {
+// processURLs calls endpoints for list of integers, aggregates, filters and sorts results
+func processURLs(urls ...string) Results {
 
 	pipe := make(chan Results, len(urls))
 
@@ -70,7 +70,7 @@ func getNumbers(urls ...string) Results {
 				results[done] = res
 				// work done, increase
 				done++
-			case <-time.After(time.Millisecond * 300):
+			case <-time.After(time.Millisecond * 500):
 				// nil channel to stop sending
 				pipe = nil
 				LogWarn("Too long! Timing out ...")
@@ -132,8 +132,8 @@ func getURL(url string, pipe chan Results) {
 	err = json.Unmarshal(body, &results)
 	if err != nil {
 		LogError(fmt.Sprintf("Can't decode response body - %s", err.Error()))
+		return
 	}
-
 	results.url = url
 	// prevent sending to nil channel (when timeout occurred in the mean time
 	if pipe != nil {
