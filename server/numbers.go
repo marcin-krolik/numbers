@@ -1,4 +1,4 @@
-package mgmt
+package server
 
 import (
 	"encoding/json"
@@ -11,6 +11,8 @@ import (
 )
 
 const (
+	Timeout = 500
+
 	ErrURLQueryParamNotCorrect = "Query parameter not correct"
 	ErrURLQueryParamAmbiguous  = "Query parameter ambiguous"
 )
@@ -70,7 +72,7 @@ func processURLs(urls ...string) Results {
 				results[done] = res
 				// work done, increase
 				done++
-			case <-time.After(time.Millisecond * 500):
+			case <-time.After(time.Millisecond * Timeout):
 				// nil channel to stop sending
 				pipe = nil
 				LogWarn("Too long! Timing out ...")

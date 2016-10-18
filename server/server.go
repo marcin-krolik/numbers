@@ -1,4 +1,4 @@
-package mgmt
+package server
 
 import (
 	"net/http"
@@ -13,8 +13,8 @@ type Server struct {
 	mux *http.ServeMux
 }
 
-// NewServer creates instance of Server
-func NewServer() *Server {
+// New creates instance of Server
+func New() *Server {
 	return &Server{mux: http.NewServeMux()}
 }
 

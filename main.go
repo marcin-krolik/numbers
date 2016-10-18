@@ -2,10 +2,10 @@ package main
 
 import (
 	"log"
-	"numbers/mgmt"
+	"numbers/server"
 )
 
 func main() {
-	server := mgmt.NewServer()
-	log.Fatal(server.Start())
+	srv := server.New()
+	log.Fatal(srv.Start())
 }

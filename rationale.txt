@@ -1,0 +1,18 @@
+Implementation description
+--------------------------
+Server spawns go routine for each url passed in query.
+Routines send GET requests to given hosts and communicate results by channel.
+Routines do not send anything to channel when error occurs.
+In separate go routine server observes result channel until time out passes.
+Results are then aggregated, filtered and sorted.
+
+Additionally Makefile, test and build scripts were provided. Unit tests for critical functions, with happy path
+and at least one case for errors.
+
+Ambiguities
+-----------
+Specification does precise how endpoint errors and timeouts should be handled. It was assumed in such case,
+go routine should log error and do not send anything to channel
+Specification does not precise how incorrect query parameters should be handled. It was assumed,
+warning should be reported in case where at least one proper parameter was provided, url passed correctly is send for processing,
+error should be reported whenever whole query is incorrect. No processing done in this case.
