@@ -21,4 +21,3 @@ func numbersHandler(w http.ResponseWriter, r *http.Request) {
 	// write response
 	w.Write(respJson)
 }
-

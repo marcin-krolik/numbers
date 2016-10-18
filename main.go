@@ -1,8 +1,8 @@
 package main
 
 import (
-	"numbers/mgmt"
 	"log"
+	"numbers/mgmt"
 )
 
 func main() {
